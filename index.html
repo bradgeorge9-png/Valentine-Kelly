@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise for Kelly</title>
+<style>
+  body { margin:0; padding:0; font-family:'Segoe UI', sans-serif; background:linear-gradient(to bottom,#ffccd5,#ff99c8); overflow-x:hidden; color:#fff; text-align:center;}
+  .typewriter { display:inline-block; overflow:hidden; border-right:0.15em solid #fff; white-space:nowrap; animation: typing 4s steps(50,end), blink 0.75s step-end infinite; font-size:2em; margin-top:15vh;}
+  @keyframes typing { from { width: 0 } to { width: 100% } } @keyframes blink { 50% { border-color: transparent } }
+  .button-container { margin-top:40px; opacity:0; animation: fadeIn 2s forwards; }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .btn { font-size:1.5em; padding:15px 40px; margin:20px; border:none; border-radius:10px; cursor:pointer; transition:transform 0.3s, background 0.3s; box-shadow:0 4px 15px rgba(0,0,0,0.2); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+  .btn-yes { background: #ff4d6d; color:#fff; } .btn-yes:hover { background:#ff2a50; transform:scale(1.15); }
+  .btn-no { background:#fff; color:#ff4d6d; } .btn-no:hover { background:#ffe6eb; transform:scale(1.15); }
+  #no-text { margin-top:20px; font-size:1.8em; color:#ff0044; display:none; font-weight:bold; }
+  .slideshow { width:80%; max-width:600px; margin:50px auto; position:relative; border-radius:15px; overflow:hidden; box-shadow:0 8px 25px rgba(0,0,0,0.3); }
+  .slide { width:100%; height:auto; position:absolute; top:0; left:100%; opacity:0; transition:all 1s ease-in-out; }
+  .slide.active { left:0; opacity:1; }
+  .slide.prev { left:-100%; opacity:0; }
+  .confetti { position:absolute; width:10px; height:10px; background:#ff0; opacity:0.8; pointer-events:none; z-index:9999; }
+  .heart { position:absolute; width:20px; height:20px; background:red; transform:rotate(-45deg); animation:float 6s linear infinite; opacity:0.7; }
+  .heart::before, .heart::after { content:""; position:absolute; width:20px; height:20px; background:red; border-radius:50%; }
+  .heart::before { top:-10px; left:0; } .heart::after { left:10px; top:0; }
+  @keyframes float { 0% { transform: translateY(0) rotate(-45deg); opacity:0.7; } 100% { transform: translateY(-1000px) rotate(-45deg); opacity:0; } }
+  #yes-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:3em; color:#ff0066; text-shadow:0 0 20px #ff99cc,0 0 40px #ff66cc; opacity:0; animation:glowText 2s forwards; }
+  @keyframes glowText { 0% { opacity:0; transform:translate(-50%,-60%) scale(0.5); } 50% { opacity:1; transform:translate(-50%,-50%) scale(1.2); } 100% { opacity:1; transform:translate(-50%,-50%) scale(1); } }
+</style>
+</head>
+<body>
+
+<div class="typewriter">Kelly, I needed to ask this late to keep it dramatic and more exciting…</div>
+
+<div class="button-container">
+  <button class="btn btn-yes" onclick="yesClicked()">Yes</button>
+  <button class="btn btn-no" onclick="noClicked()">No</button>
+</div>
+
+<div id="no-text">You lekker mal 😜</div>
+<div id="yes-text">I LOVE YOU! ❤️</div>
+
+<div class="slideshow" id="slideshow">
+  <img src="photo1.jpg" class="slide active">
+  <img src="photo2.jpg" class="slide">
+  <img src="photo3.jpg" class="slide">
+</div>
+
+<audio id="bgMusic" autoplay loop>
+  <source src="romantic-music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  function noClicked(){ document.getElementById('no-text').style.display='block'; }
+  function yesClicked(){ document.getElementById('yes-text').style.opacity=1; for(let i=0;i<150;i++) createConfetti(); }
+  function createConfetti(){ const c=document.createElement('div'); c.classList.add('confetti'); c.style.background=getRandomColor(); c.style.left=Math.random()*window.innerWidth+'px'; c.style.top=Math.random()*window.innerHeight+'px'; c.style.width=c.style.height=Math.random()*8+8+'px'; document.body.appendChild(c); setTimeout(()=>c.remove(),4000); }
+  function getRandomColor(){ const colors=['#ff4d6d','#ffcc00','#ff66cc','#ff3399','#ff99cc']; return colors[Math.floor(Math.random()*colors.length)]; }
+  let slideIndex=0; const slides=document.querySelectorAll('.slide'); setInterval(()=>{ slides.forEach(s=>s.classList.remove('active','prev')); slides[slideIndex].classList.add('prev'); slideIndex=(slideIndex+1)%slides.length; slides[slideIndex].classList.add('active'); },4000);
+  setInterval(()=>{ const h=document.createElement('div'); h.classList.add('heart'); h.style.left=Math.random()*window.innerWidth+'px'; h.style.width=h.style.height=Math.random()*20+10+'px'; document.body.appendChild(h); setTimeout(()=>h.remove(),6000); },500);
+  document.addEventListener('mousemove',e=>{ const t=document.createElement('div'); t.classList.add('heart'); t.style.left=e.pageX+'px'; t.style.top=e.pageY+'px'; t.style.width=t.style.height=Math.random()*15+10+'px'; document.body.appendChild(t); setTimeout(()=>t.remove(),1000); });
+</script>
+
+</body>
+</html>
